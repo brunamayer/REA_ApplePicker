@@ -1,0 +1,291 @@
+/* =========================================
+   BASE 
+   ========================================= */
+* { box-sizing: border-box; }
+
+body {
+  font-family: sans-serif;
+  margin: 5%;
+}
+
+
+/* =========================================
+   CABEÇALHO
+   ========================================= */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 0px;
+  background: #fff;
+}
+
+h1 { margin: 0; }
+
+
+/* HEADER 3 COLUNAS (não interfere no grid das páginas) */
+.hdr {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* esquerda | centro | direita */
+  align-items: center;
+  gap: 10%;
+  padding: 20px 0px;
+  background: #fff;
+}
+
+.hdr-left { justify-self: start; }
+.hdr-center { justify-self: end; }
+.hdr-right { justify-self: end; }
+
+/* garante que o título não empurre os botões */
+.hdr h1 { margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* responsivo: empilha em telas menores */
+@media (max-width: 680px) {
+  .hdr {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    text-align: center;
+  }
+  .hdr-left, .hdr-center, .hdr-right {
+    justify-self: center;
+  }
+}
+
+
+
+/* =========================================
+   PÁGINA INICIAL (INDEX)
+   - Grid responsivo das 40 imagens
+   - Itens quadrados com cover
+   - Seleção e hovers
+   ========================================= */
+
+/* Grid responsivo:
+   - auto-fit + minmax => ajusta nº de colunas conforme largura
+   - gap = espaçamento entre células */
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+  gap: 6px;
+}
+
+/* Células quadradas do grid:
+   - aspect-ratio 1/1 => padroniza altura
+   - object-fit: cover => preenche sem distorcer
+   - cursor: pointer => para indicar interatividade */
+
+#grid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  cursor: pointer;
+  border: 0;
+}
+
+/* Estado de seleção:
+   - outline interno (não bagunça o layout do grid) */
+
+#grid img.selecionada {
+  outline: 3px solid #2b2b2b;
+  outline-offset: -3px;
+}
+
+/* Hover padrão (antes de atingir 3 selecionadas) */
+#grid img:hover {
+  outline: 3px solid #2b2b2b;
+  outline-offset: -3px;
+}
+
+/* Hover quando já existem 3 selecionadas:
+   - muda o contorno para cinza claro
+   - a classe body.max-selecionadas é gerenciada no JS (ver inicio.js)*/
+
+body.max-selecionadas #grid img:hover {
+  outline: 3px solid rgb(215, 215, 215);
+  outline-offset: -3px;
+}
+
+
+/* =========================================
+   BOTÕES (ESTILO GERAL)
+   - Look minimalista
+   - Destaque ao "Continuar" quando habilitado
+   ========================================= */
+   
+button {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 18px;
+  border: 2px solid #2b2b2b;
+  border-radius: 1px;
+  background: #fff;
+  color: #2b2b2b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background: #2b2b2b;
+  color: #fff;
+}
+
+/* Botão desabilitado:
+   - transparente e sem interação */
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Botão "Continuar" habilitado:
+   - borda e texto em vermelho */
+
+#continuar:not(:disabled) {
+  border-color:#2b2b2b;
+  background: #2b2b2b;
+  color: #ffffff;
+}
+
+/* Hover do "Continuar" habilitado:
+   - fundo vermelho, texto branco */
+
+#continuar:not(:disabled):hover {
+  background: rgb(255, 255, 255);
+  color: #2b2b2b;
+}
+
+
+/* =========================================
+   PÁGINA DE LOADING (loading.html)
+   - Spinner simples com texto
+   ========================================= */
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #ccc;
+  border-top: 4px solid #000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+
+/* =========================================
+   PÁGINA DE RESULTADO (result.html)
+   - Layout em 2 colunas (esquerda, menor: img vencedora, direita, maior: grid mini maçãs)
+   - Informações (ID e Score) em linhas separadas 
+   ========================================= */
+
+/* Layout principal da página de resultado:
+   - 1fr 2fr => proporção 1parte: vencedora grande + 2partes: grid mini
+   - quebra para 1 coluna e empilha no mobile */
+
+.resultado {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .resultado {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Bloco Imagem Destaque "Vencedora" (esquerda):
+   - grid de 3 linhas: imagem / ID / Score */
+
+#vencedora {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: 8px;
+  align-items: start;
+}
+
+/* Imagem em destaque*/
+#vencedora img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 0;
+  outline: 3px solid #2b2b2b;
+  outline-offset: -3px;
+}
+
+/* Textos abaixo da vencedora:
+   - .name aqui exibe o "ID: X"
+   - .score exibe "Score: Y" */
+#vencedora .name,
+#vencedora .score {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-align: left;
+}
+
+/* Bloco Mini Grid (direita):
+    - mini grid adaptado
+    - infos das imagens */
+.resultado #grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 8px;
+}
+
+/* Card de cada item do Mini Grid:
+   - 3 linhas: imagem / ID / Score */
+.resultado #grid .card {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  align-items: start;
+}
+
+/* Img de cada .card do Mini Grid */
+.resultado #grid img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 0;
+  display: block;
+}
+
+/* Linhas de informação no grid (direita):
+   - .name aqui exibe o "ID: X"
+   - .score exibe "Score: Y" */
+.resultado #grid .name,
+.resultado #grid .score {
+  margin: 2px 0 0 0;
+  font-size: 11px;
+  line-height: 1.2;
+  text-align: left;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.resultado #grid .score { opacity: 0.8; }
+
+/* Desabilita hover/interação visual no grid de resultados */
+.resultado #grid img:hover {
+  outline: 3px solid rgb(215, 215, 215);
+  outline-offset: -3px;
+  cursor: default; /* não parece clicável */
+}
