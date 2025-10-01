@@ -8,6 +8,11 @@
 
 Proposta de interface para o projeto [Nome do Projeto?]. Por enquanto, exibe uma galeria de 40 maçãs, permite a seleção de exatamente 3 imagens, sorteia uma das imagens (no futuro, substituir por nova imagem) exibindo o resultado do processo e um grid ordenado por um score acumulado ao longo das seleções. O backend é um servidor **Node.js + Express** simples que lê/escreve um `data.json` com as informações associadas às imagens.
 
+
+![alt text](image.png)
+
+
+
 ---
 
 ## 📁 Estrutura de Pastas
