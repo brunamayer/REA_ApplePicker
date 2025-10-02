@@ -1,9 +1,8 @@
 # REA_ApplePicker
 
-### Realidades APPle Picker V2.1   01/10/25
+### Realidades APple Picker V2.1   01/10/25
 
-# Maçãs — MVP (HTML/CSS/JS + Node/Express)
-
+### APPP (HTML/CSS/JS + Node/Express)
 > **Versão:** 2.1.0 
 
 Proposta de interface para o projeto [Nome do Projeto?]. Por enquanto, exibe uma galeria de 40 maçãs, permite a seleção de exatamente 3 imagens, sorteia uma das imagens (no futuro, substituir por nova imagem) exibindo o resultado do processo e um grid ordenado por um score acumulado ao longo das seleções. O backend é um servidor **Node.js + Express** simples que lê/escreve um `data.json` com as informações associadas às imagens.
